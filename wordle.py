@@ -2,6 +2,7 @@ import os
 from random import choice
 from enum import Enum
 from string import ascii_lowercase
+from collections import defaultdict
 
 
 class Color(Enum):
@@ -30,13 +31,15 @@ def print_board():
 
 
 def print_guess(guess):
+    used = defaultdict(lambda: 0)
     for n, letter in enumerate(guess):
         if letter == secret_word[n]:
             color = Color.CORRECT
-        elif letter in secret_word:
+        elif 1 < secret_word.count(letter) >= used[letter]:
             color = Color.EXISTS
         else:
             color = Color.MISS
+        used[letter] += 1
         set_color(color)
         print(letter, end='')
     set_color()
@@ -75,14 +78,11 @@ all_words.update(answers)
 quit_to_os = False
 
 while True:
-
     tries = 6
     guesses = []
-    guess = ''
     secret_word = choice(answers)
-
     print_board()
-    while tries > 0:
+    while tries:
         while True:
             guess = input("Your guess: ")
             if guess.lower() == 'q':

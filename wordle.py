@@ -84,11 +84,11 @@ while True:
     print_board()
     while tries:
         while True:
-            guess = input("Your guess: ")
-            if guess.lower() == 'q':
+            guess = input("Your guess: ").lower()
+            if guess == 'q':
                 quit_to_os = True
                 break
-            elif guess.lower() == 'c':
+            elif guess == 'c':
                 print(secret_word)
             elif guess in all_words:
                 break

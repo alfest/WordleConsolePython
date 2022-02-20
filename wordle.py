@@ -35,7 +35,7 @@ def print_guess(guess):
     for n, letter in enumerate(guess):
         if letter == secret_word[n]:
             color = Color.CORRECT
-        elif 1 < secret_word.count(letter) >= used[letter]:
+        elif 0 < secret_word.count(letter) >= used[letter]:
             color = Color.EXISTS
         else:
             color = Color.MISS
@@ -48,8 +48,8 @@ def print_guess(guess):
 
 def print_alphabet():
     used_letters = set()
-    for w in guesses:
-        used_letters.update(iter(w))
+    for word in guesses:
+        used_letters.update(iter(word))
     for letter in ascii_lowercase:
         if letter in used_letters and letter in secret_word:
             color = Color.CORRECT
@@ -64,16 +64,13 @@ def print_alphabet():
 
 
 def load_file_to_list(filename):
-    lines = []
     with open(filename) as file:
-        for line in file:
-            lines.append(line.strip())
-    return lines
+        return tuple(w.strip() for w in file)
 
 
 os.system('color')
 all_words = set(load_file_to_list('wordle-allowed-guesses.txt'))
-answers = tuple(load_file_to_list('wordle-answers-alphabetical.txt'))
+answers = load_file_to_list('wordle-answers-alphabetical.txt')
 all_words.update(answers)
 quit_to_os = False
 

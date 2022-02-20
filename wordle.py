@@ -47,9 +47,7 @@ def print_guess(guess):
 
 
 def print_alphabet():
-    used_letters = set()
-    for word in guesses:
-        used_letters.update(iter(word))
+    used_letters = {letter for letter in ''.join(guesses)}
     for letter in ascii_lowercase:
         if letter in used_letters and letter in secret_word:
             color = Color.CORRECT
